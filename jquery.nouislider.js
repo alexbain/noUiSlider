@@ -560,6 +560,17 @@ $.fn.noUiSlider - WTFPL - refreshless.com/nouislider/ */
 
 // DOM additions
 
+	function addStep ( options, index ) {
+
+		var step = $('<div></div>');
+		step.addClass('step');
+		step.attr('data-i', index);
+		step.css('left', options.xSteps[0] * index + '%');
+
+		return step;
+
+	}
+
 	// Append a handle to the base.
 	function addHandle ( options, index ) {
 
@@ -671,6 +682,22 @@ $.fn.noUiSlider - WTFPL - refreshless.com/nouislider/ */
 		return handles;
 	}
 
+	function addSteps ( options, base ) {
+
+		var index,
+		    steps = [],
+		    numberOfSteps = parseInt(100 / options.xSteps[0]);
+
+		// Append steps.
+		for ( index = 0; index < numberOfSteps; index++ ) {
+
+			// Keep a list of all added handles.
+			steps.push( addStep( options, index ).appendTo(base) );
+		}
+
+		return steps;
+	}
+
 	// Initialize a single slider.
 	function addSlider ( options, target ) {
 
@@ -695,6 +722,7 @@ function closure ( target, options, originalOptions ){
 	var $Target = $(target),
 		$Locations = [-1, -1],
 		$Base,
+		$Steps,
 		$Serialization,
 		$Handles;
 
@@ -1038,6 +1066,7 @@ function closure ( target, options, originalOptions ){
 	// Create the base element, initialise HTML and set classes.
 	// Add handles and links.
 	$Base = addSlider( options, $Target );
+	$Steps = addSteps( options, $Base );
 	$Handles = addHandles( options, $Base );
 	$Serialization = addLinks( options, $Handles );
 
