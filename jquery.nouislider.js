@@ -686,12 +686,12 @@ $.fn.noUiSlider - WTFPL - refreshless.com/nouislider/ */
 
 		var index,
 		    steps = [],
-		    numberOfSteps = parseInt(100 / options.xSteps[0]);
+		    numberOfSteps = Math.ceil(100 / options.xSteps[0]);
 
 		// Append steps.
-		for ( index = 0; index < numberOfSteps; index++ ) {
+		for ( index = 0; index <= numberOfSteps; index++ ) {
 
-			// Keep a list of all added handles.
+			// Keep a list of all added steps.
 			steps.push( addStep( options, index ).appendTo(base) );
 		}
 
